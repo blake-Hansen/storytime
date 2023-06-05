@@ -1,9 +1,11 @@
 import React from 'react';
+import ThemeContainer from './components/StoryThemes/ThemeContainer';
 
 export default function App() {
   return (
     <div id="App">
-      <p>Hello, world!</p>
+      <h2>Welcome to Story Time</h2>
+      <ThemeContainer />
     </div>
   );
 }
