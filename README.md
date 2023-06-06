@@ -1,2 +1,2 @@
 # storytime
-Story Time will be a bedtime story Fullstack App using ChatGPT
+Story Time will be a bedtime story for children, a Fullstack App using ChatGPT
