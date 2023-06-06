@@ -31,7 +31,7 @@ export default function ThemeContainer({
           <Length setLength={setLength} />
         </div>
       </div>
-      <input type="button" onClick={setSendReq(true)} />
+      <input type="button" value="Submit" onClick={() => setSendReq(true)} />
     </div>
   );
 }

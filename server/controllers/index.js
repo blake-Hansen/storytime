@@ -13,14 +13,14 @@ module.exports = {
     res.end();
   },
   getStory: (req, res) => {
-    // console.log('This is body', req.body);
-    getChat.getStory(req.body, (err, results) => {
+    console.log('This is body', req.query);
+    getChat.getStory(req.query, (err, results) => {
       if (err) {
         console.log(err);
         res.status(505);
         res.end();
       } else {
-        console.log('We got to Line 23 in response controllers');
+        console.log('We got to Line 23 in response controllers', results);
         res.json(results);
         res.status(201);
         res.end();

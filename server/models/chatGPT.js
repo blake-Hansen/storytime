@@ -9,14 +9,16 @@ const openai = new OpenAIApi(new Configuration({
 module.exports = {
   getStory(params, callback) {
     console.log('THis is chat params', params);
-    const { age, location, length } = params;
+    const { age, location, length, name } = params;
     openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [{
         role: 'user',
-        content: `I need a childrens bedtime story for a child the age of ${age}, the story should take place in ${location}, and take ${length} to read.`,
+        content: `I need a childrens bedtime story for a child the age of ${age}, the story should take place in ${location} and the main characters name should be ${name}, and take ${length} to read.`,
       }],
       temperature: 0.7,
-    }).then((res) => callback(null, res));
+    })
+      .then((res) => callback(null, res.data.choices[0].message.content))
+      .catch((err) => callback(err, null));
   },
 };
