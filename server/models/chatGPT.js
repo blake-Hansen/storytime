@@ -8,8 +8,13 @@ const openai = new OpenAIApi(new Configuration({
 
 module.exports = {
   getStory(params, callback) {
-    console.log('THis is chat params', params);
-    const { age, location, length, name } = params;
+    // console.log('THis is chat params', params);
+    const {
+      age,
+      location,
+      length,
+      name,
+    } = params;
     openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [{
