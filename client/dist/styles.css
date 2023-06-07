@@ -40,6 +40,21 @@
   margin-left: 50%;
 }
 
+.nme-btn-container {
+  display: flex;
+  flex-direction: column;
+  height: 140px;
+  overflow-y: scroll;
+
+}
+.stry-nme-btn {
+  height: 15px;
+  width: 75px;
+}
 .saveStory {
-  
+
+}
+
+.alert-text {
+  color: red;
 }

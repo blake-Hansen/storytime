@@ -5,7 +5,9 @@ import axios from 'axios';
 export default function SaveStory({ setaccdisplay, story, accountData }) {
   const [storyName, setStoryName] = useState('');
   const [save, setSave] = useState(false);
+  const [length, setLength] = useState(false);
   const data = { body: story, storyname: storyName, email: accountData.email };
+  const [warnings, setWarnings] = useState('');
   useEffect(() => {
     if (save) {
       axios.put('/save', {
@@ -17,7 +19,16 @@ export default function SaveStory({ setaccdisplay, story, accountData }) {
   }, [save]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSave(true);
+    if (storyName.length === 0) {
+      setWarnings('Please enter a valid story name.');
+      setLength(true);
+    } else if (story.length === 0) {
+      setWarnings('Please get a story Below to save to your account.');
+      setLength(true);
+    } else {
+      setLength(false);
+      setSave((prev) => !prev);
+    }
   };
 
   return (
@@ -27,6 +38,7 @@ export default function SaveStory({ setaccdisplay, story, accountData }) {
         <input id="name" type="text" value={storyName} onChange={(e) => setStoryName(e.target.value)} />
       </label>
       <input onClick={(e) => handleSubmit(e)} type="submit" value="Save" />
+      {length ? <div className="alert-text">{warnings}</div> : <div />}
     </form>
   );
 }

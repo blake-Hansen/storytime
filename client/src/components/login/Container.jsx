@@ -8,7 +8,7 @@ import SaveStory from './SaveStory';
 export default function LoginContainer({ story }) {
   const [toRender, setToRender] = useState(true);
   const [accountDisplay, setAccountDisplay] = useState(true);
-  const [accountDataVals, setAccountDataVals] = useState({});
+  const [accountDataVals, setAccountDataVals] = useState(null);
 
   const setAccountData = (data) => {
     console.log('This is account data: ', data);

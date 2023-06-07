@@ -449,6 +449,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _StoryButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StoryButton */ "./client/src/components/login/StoryButton.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -463,16 +464,27 @@ function AccountStories(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     name = _useState2[0],
     setName = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState4 = _slicedToArray(_useState3, 2),
-    email = _useState4[0],
-    setEmail = _useState4[1];
+    list = _useState4[0],
+    setList = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState6 = _slicedToArray(_useState5, 2),
     password = _useState6[0],
     setPassword = _useState6[1];
-  console.log('This is acount data: ', accountData);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "This is a list of your currently saved Stories."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, accountData.name));
+  if (accountData !== null) {
+    console.log('Conditional test', accountData.stories);
+    // setList(accountData.stories);
+  }
+
+  console.log('This is acount data Line 8: ', accountData);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "This is a list of your currently saved Stories."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "nme-btn-container"
+  }, list ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, list.map(function (obj) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StoryButton__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      accountData: obj
+    });
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null)));
 }
 
 /***/ }),
@@ -517,7 +529,7 @@ function LoginContainer(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     accountDisplay = _useState4[0],
     setAccountDisplay = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState6 = _slicedToArray(_useState5, 2),
     accountDataVals = _useState6[0],
     setAccountDataVals = _useState6[1];
@@ -694,11 +706,19 @@ function SaveStory(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     save = _useState4[0],
     setSave = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    length = _useState6[0],
+    setLength = _useState6[1];
   var data = {
     body: story,
     storyname: storyName,
     email: accountData.email
   };
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState8 = _slicedToArray(_useState7, 2),
+    warnings = _useState8[0],
+    setWarnings = _useState8[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (save) {
       axios__WEBPACK_IMPORTED_MODULE_1__["default"].put('/save', {
@@ -712,7 +732,18 @@ function SaveStory(_ref) {
   }, [save]);
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    setSave(true);
+    if (storyName.length === 0) {
+      setWarnings('Please enter a valid story name.');
+      setLength(true);
+    } else if (story.length === 0) {
+      setWarnings('Please get a story Below to save to your account.');
+      setLength(true);
+    } else {
+      setLength(false);
+      setSave(function (prev) {
+        return !prev;
+      });
+    }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     className: "saveStory",
@@ -732,7 +763,9 @@ function SaveStory(_ref) {
     },
     type: "submit",
     value: "Save"
-  }));
+  }), length ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "alert-text"
+  }, warnings) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null));
 }
 SaveStory.propTypes = {
   setacctdisplay: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired,
@@ -850,6 +883,72 @@ function Signup(_ref) {
 Signup.propTypes = {
   setacctdisplay: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired,
   setAccountData: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired
+};
+
+/***/ }),
+
+/***/ "./client/src/components/login/StoryButton.jsx":
+/*!*****************************************************!*\
+  !*** ./client/src/components/login/StoryButton.jsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ StoryButton)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+function StoryButton(_ref) {
+  var accountData = _ref.accountData,
+    setacctdisplay = _ref.setacctdisplay,
+    setAccountData = _ref.setAccountData;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState2 = _slicedToArray(_useState, 2),
+    name = _useState2[0],
+    setName = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState4 = _slicedToArray(_useState3, 2),
+    email = _useState4[0],
+    setEmail = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState6 = _slicedToArray(_useState5, 2),
+    password = _useState6[0],
+    setPassword = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState8 = _slicedToArray(_useState7, 2),
+    submit = _useState8[0],
+    setSubmit = _useState8[1];
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+  };
+  var clickHandler = function clickHandler(e) {
+    e.preventDefault();
+    console.log('Clicked in button');
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "stry-nme-btn",
+    onClick: function onClick(e) {
+      return clickHandler(e);
+    },
+    type: "button"
+  }, accountData.name);
+}
+StoryButton.propTypes = {
+  setacctdisplay: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().func).isRequired,
+  setAccountData: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().func).isRequired,
+  accountData: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().object)
 };
 
 /***/ }),
