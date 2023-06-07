@@ -19,7 +19,7 @@ export default function Login({ setaccdisplay, setAccountData }) {
       axios.post('/account', {
         data,
       })
-        .then((res) => console.log(res.data))
+        .then((res) => setAccountData(res.data))
         .catch((err) => console.log(err));
     }
   }, [submit]);

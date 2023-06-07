@@ -31,6 +31,20 @@ module.exports = {
       }
     });
   },
+  save: (req, res) => {
+    console.log('LINE 6 body put for get account', req.body);
+    models.save(req.body.data, (err, results) => {
+      if (err) {
+        console.log(err);
+        res.send('Could not Save');
+        res.end();
+      } else {
+        console.log('LINE 13 CONTROLLER ', results);
+        res.json(results);
+        res.end();
+      }
+    });
+  },
   getStory: (req, res) => {
     console.log('This is body', req.query);
     getChat.getStory(req.query, (err, results) => {

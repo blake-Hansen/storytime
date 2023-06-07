@@ -543,7 +543,7 @@ function LoginContainer(_ref) {
   }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountDisplay__WEBPACK_IMPORTED_MODULE_3__["default"], {
     accountData: accountDataVals
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, accountDisplay ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, toRender ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    setData: setAccountData,
+    setAccountData: setAccountData,
     setaccdisplay: setAccountDisplay
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SignUp__WEBPACK_IMPORTED_MODULE_1__["default"], {
     setAccountData: setAccountData,
@@ -551,6 +551,7 @@ function LoginContainer(_ref) {
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountStories__WEBPACK_IMPORTED_MODULE_4__["default"], {
     accountData: accountDataVals
   }))), !accountDisplay ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "To save the current story, enter a name for the story and save."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SaveStory__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    accountData: accountDataVals,
     story: story
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null));
 }
@@ -610,7 +611,7 @@ function Login(_ref) {
       axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('/account', {
         data: data
       }).then(function (res) {
-        return console.log(res.data);
+        return setAccountData(res.data);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -669,8 +670,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -679,18 +681,38 @@ function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefine
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
 function SaveStory(_ref) {
-  var setaccdisplay = _ref.setaccdisplay;
+  var setaccdisplay = _ref.setaccdisplay,
+    story = _ref.story,
+    accountData = _ref.accountData;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
-    story = _useState2[0],
-    setStory = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    storyName = _useState2[0],
+    setStoryName = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    storyName = _useState4[0],
-    setStoryName = _useState4[1];
+    save = _useState4[0],
+    setSave = _useState4[1];
+  var data = {
+    body: story,
+    storyname: storyName,
+    email: accountData.email
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (save) {
+      axios__WEBPACK_IMPORTED_MODULE_1__["default"].put('/save', {
+        data: data
+      }).then(function (res) {
+        return console.log(res);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }, [save]);
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
+    setSave(true);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     className: "saveStory",
@@ -700,17 +722,22 @@ function SaveStory(_ref) {
   }, "Name:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     id: "name",
     type: "text",
-    value: story,
+    value: storyName,
     onChange: function onChange(e) {
       return setStoryName(e.target.value);
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    onClick: function onClick(e) {
+      return handleSubmit(e);
+    },
     type: "submit",
     value: "Save"
   }));
 }
 SaveStory.propTypes = {
-  setacctdisplay: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().func).isRequired
+  setacctdisplay: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired,
+  story: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string).isRequired,
+  accountData: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().object).isRequired
 };
 
 /***/ }),

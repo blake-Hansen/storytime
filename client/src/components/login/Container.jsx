@@ -41,7 +41,7 @@ export default function LoginContainer({ story }) {
           {accountDisplay ? (
             <div>
               {toRender
-                ? <Login setData={setAccountData} setaccdisplay={setAccountDisplay} />
+                ? <Login setAccountData={setAccountData} setaccdisplay={setAccountDisplay} />
                 : <SignUp setAccountData={setAccountData} setaccdisplay={setAccountDisplay} />}
             </div>
           )
@@ -51,7 +51,7 @@ export default function LoginContainer({ story }) {
       {!accountDisplay ? (
         <div>
           <div>To save the current story, enter a name for the story and save.</div>
-          <SaveStory story={story} />
+          <SaveStory accountData={accountDataVals} story={story} />
         </div>
       ) : <div />}
     </div>
