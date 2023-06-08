@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-export default function StoryButton({ accountData, setacctdisplay, setAccountData }) {
+export default function StoryButton({ accountData, setacctdisplay, setAccountData, setStory }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +12,7 @@ export default function StoryButton({ accountData, setacctdisplay, setAccountDat
   const clickHandler = (e) => {
     e.preventDefault();
     console.log('Clicked in button');
+    setStory(accountData.body);
   };
   return (
     <button className="stry-nme-btn" onClick={(e) => clickHandler(e)} type="button">

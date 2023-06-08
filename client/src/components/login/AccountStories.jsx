@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import StoryButton from './StoryButton';
 
-export default function AccountStories({ accountData }) {
+export default function AccountStories({ accountData, setStory }) {
   const [name, setName] = useState('');
   const [list, setList] = useState(null);
   const [password, setPassword] = useState('');
-  if (accountData !== null) {
-    console.log('Conditional test', accountData.stories);
-    // setList(accountData.stories);
-  }
+  useEffect(() => {
+    if (accountData !== null) {
+      console.log('Conditional test', accountData.stories);
+      setList(accountData.stories);
+    }
+  }, [accountData]);
   console.log('This is acount data Line 8: ', accountData);
   return (
     <div>
@@ -17,7 +19,7 @@ export default function AccountStories({ accountData }) {
         {list ? (
           <>
             {list.map((obj) => (
-              <StoryButton accountData={obj} />
+              <StoryButton setStory={setStory} accountData={obj} />
             ))}
           </>
         ) : <div />}

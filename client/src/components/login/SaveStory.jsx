@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-export default function SaveStory({ setaccdisplay, story, accountData }) {
+export default function SaveStory({ setaccdisplay, story, accountData, setSubmit }) {
   const [storyName, setStoryName] = useState('');
   const [save, setSave] = useState(false);
   const [length, setLength] = useState(false);
@@ -13,7 +13,11 @@ export default function SaveStory({ setaccdisplay, story, accountData }) {
       axios.put('/save', {
         data,
       })
-        .then((res) => console.log(res))
+        .then((res) => {
+          setSubmit((prev) => !prev);
+          setStoryName('');
+          setSave((prev) => !prev);
+        })
         .catch((err) => console.log(err));
     }
   }, [save]);
@@ -32,7 +36,7 @@ export default function SaveStory({ setaccdisplay, story, accountData }) {
   };
 
   return (
-    <form className="saveStory" onSubmit={handleSubmit}>
+    <form className="saveStory" onSubmit={(e) => handleSubmit(e)}>
       <label htmlFor="name">
         Name:
         <input id="name" type="text" value={storyName} onChange={(e) => setStoryName(e.target.value)} />
@@ -47,4 +51,5 @@ SaveStory.propTypes = {
   setacctdisplay: PropTypes.func.isRequired,
   story: PropTypes.string.isRequired,
   accountData: PropTypes.object.isRequired,
+  setSubmit: PropTypes.func.isRequired,
 };
