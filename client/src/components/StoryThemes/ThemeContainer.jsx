@@ -12,7 +12,6 @@ export default function ThemeContainer({
   setName,
   setSendReq,
 }) {
-  console.log('This happened 10000');
   // const [selected, setSelected] = useState(options[0]);
   return (
     <div className="ThemeContainer">
@@ -32,7 +31,7 @@ export default function ThemeContainer({
           <Length setLength={setLength} />
         </div>
       </div>
-      <input type="button" value="Submit" onClick={() => setSendReq((prev) => !prev)} />
+      <input type="button" value="Submit" onClick={() => setSendReq(true)} />
     </div>
   );
 }

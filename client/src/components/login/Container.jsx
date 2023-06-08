@@ -5,11 +5,10 @@ import AccountDisplay from './AccountDisplay';
 import AccountStories from './AccountStories';
 import SaveStory from './SaveStory';
 
-export default function LoginContainer({ story, setStory }) {
+export default function LoginContainer({ story }) {
   const [toRender, setToRender] = useState(true);
   const [accountDisplay, setAccountDisplay] = useState(true);
   const [accountDataVals, setAccountDataVals] = useState(null);
-  const [submit, setSubmit] = useState(false);
 
   const setAccountData = (data) => {
     console.log('This is account data: ', data);
@@ -42,24 +41,17 @@ export default function LoginContainer({ story, setStory }) {
           {accountDisplay ? (
             <div>
               {toRender
-                ? (
-                  <Login
-                    submit={submit}
-                    setSubmit={setSubmit}
-                    setAccountData={setAccountData}
-                    setaccdisplay={setAccountDisplay}
-                  />
-                )
+                ? <Login setAccountData={setAccountData} setaccdisplay={setAccountDisplay} />
                 : <SignUp setAccountData={setAccountData} setaccdisplay={setAccountDisplay} />}
             </div>
           )
-            : <AccountStories setStory={setStory} accountData={accountDataVals} />}
+            : <AccountStories accountData={accountDataVals} />}
         </div>
       </div>
       {!accountDisplay ? (
         <div>
           <div>To save the current story, enter a name for the story and save.</div>
-          <SaveStory setSubmit={setSubmit} accountData={accountDataVals} story={story} />
+          <SaveStory accountData={accountDataVals} story={story} />
         </div>
       ) : <div />}
     </div>

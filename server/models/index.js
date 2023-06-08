@@ -64,12 +64,7 @@ module.exports = {
         callback(err, null);
         console.log('Get Reviews Error: ', err);
       } else {
-        console.log('Results is still happening with invalid email an dpassword:', results.rows[0].json_agg);
-        if (results.rows[0].json_agg) {
-          callback(null, results.rows[0].json_agg[0]);
-        } else {
-          callback(null, { account: 'Invalid Password' });
-        }
+        callback(null, results.rows[0].json_agg[0]);
       }
     });
   },

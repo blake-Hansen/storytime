@@ -79,10 +79,6 @@ function App() {
         return setStory(res.data);
       }).then(function () {
         return setLoading(false);
-      }).then(function () {
-        return setSendReq(function (prev) {
-          return !prev;
-        });
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -91,7 +87,6 @@ function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     id: "App"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "Welcome to Story Time"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h4", null, "Please feel free to login in below if you would like to save stories you like to an account for future use"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_login_Container__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    setStory: setStory,
     story: story
   }), loadingInProgress ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "loader-container"
@@ -369,7 +364,6 @@ function ThemeContainer(_ref) {
     setLength = _ref.setLength,
     setName = _ref.setName,
     setSendReq = _ref.setSendReq;
-  console.log('This happened 10000');
   // const [selected, setSelected] = useState(options[0]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "ThemeContainer"
@@ -387,9 +381,7 @@ function ThemeContainer(_ref) {
     type: "button",
     value: "Submit",
     onClick: function onClick() {
-      return setSendReq(function (prev) {
-        return !prev;
-      });
+      return setSendReq(true);
     }
   }));
 }
@@ -467,8 +459,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function AccountStories(_ref) {
-  var accountData = _ref.accountData,
-    setStory = _ref.setStory;
+  var accountData = _ref.accountData;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     name = _useState2[0],
@@ -481,18 +472,16 @@ function AccountStories(_ref) {
     _useState6 = _slicedToArray(_useState5, 2),
     password = _useState6[0],
     setPassword = _useState6[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (accountData !== null) {
-      console.log('Conditional test', accountData.stories);
-      setList(accountData.stories);
-    }
-  }, [accountData]);
+  if (accountData !== null) {
+    console.log('Conditional test', accountData.stories);
+    // setList(accountData.stories);
+  }
+
   console.log('This is acount data Line 8: ', accountData);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "This is a list of your currently saved Stories."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "nme-btn-container"
   }, list ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, list.map(function (obj) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_StoryButton__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      setStory: setStory,
       accountData: obj
     });
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null)));
@@ -531,8 +520,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function LoginContainer(_ref) {
-  var story = _ref.story,
-    setStory = _ref.setStory;
+  var story = _ref.story;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState2 = _slicedToArray(_useState, 2),
     toRender = _useState2[0],
@@ -545,10 +533,6 @@ function LoginContainer(_ref) {
     _useState6 = _slicedToArray(_useState5, 2),
     accountDataVals = _useState6[0],
     setAccountDataVals = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    submit = _useState8[0],
-    setSubmit = _useState8[1];
   var setAccountData = function setAccountData(data) {
     console.log('This is account data: ', data);
     setAccountDataVals(data);
@@ -571,18 +555,14 @@ function LoginContainer(_ref) {
   }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountDisplay__WEBPACK_IMPORTED_MODULE_3__["default"], {
     accountData: accountDataVals
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, accountDisplay ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, toRender ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Login__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    submit: submit,
-    setSubmit: setSubmit,
     setAccountData: setAccountData,
     setaccdisplay: setAccountDisplay
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SignUp__WEBPACK_IMPORTED_MODULE_1__["default"], {
     setAccountData: setAccountData,
     setaccdisplay: setAccountDisplay
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_AccountStories__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    setStory: setStory,
     accountData: accountDataVals
   }))), !accountDisplay ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "To save the current story, enter a name for the story and save."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SaveStory__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    setSubmit: setSubmit,
     accountData: accountDataVals,
     story: story
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null));
@@ -617,9 +597,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Login(_ref) {
   var setaccdisplay = _ref.setaccdisplay,
-    setAccountData = _ref.setAccountData,
-    submit = _ref.submit,
-    setSubmit = _ref.setSubmit;
+    setAccountData = _ref.setAccountData;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     email = _useState2[0],
@@ -628,15 +606,10 @@ function Login(_ref) {
     _useState4 = _slicedToArray(_useState3, 2),
     password = _useState4[0],
     setPassword = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
-    starpassword = _useState6[0],
-    setStarPassword = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState8 = _slicedToArray(_useState7, 2),
-    loginError = _useState8[0],
-    setLoginError = _useState8[1];
-  // const [submit, setSubmit] = useState(false);
+    submit = _useState6[0],
+    setSubmit = _useState6[1];
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
   };
@@ -650,17 +623,9 @@ function Login(_ref) {
       axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('/account', {
         data: data
       }).then(function (res) {
-        if (res.data.account) {
-          console.log('invalid password');
-          // setSubmit((prev) => !prev);
-          setLoginError(function (prev) {
-            return !prev;
-          });
-        } else {
-          setAccountData(res.data);
-        }
+        return setAccountData(res.data);
       })["catch"](function (err) {
-        return setLoginError(true);
+        return console.log(err);
       });
     }
   }, [submit]);
@@ -668,28 +633,6 @@ function Login(_ref) {
     e.preventDefault();
     setSubmit(true);
   };
-  var emailHandler = function emailHandler(e) {
-    e.preventDefault();
-    setLoginError(false);
-    setEmail(e.target.value);
-    // setSubmit(true);
-  };
-
-  var passwordHandler = function passwordHandler(e) {
-    e.preventDefault();
-    setPassword(e.target.value);
-    setLoginError(false);
-    // setStarPassword(() => {
-    //   let count = password.split('');
-    //   let temp = '';
-    //   count.forEach((t) => {
-    //     temp += '*';
-    //   });
-    //   return temp;
-    // });
-    // setSubmit(true);
-  };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     className: "signIn",
     onSubmit: handleSubmit
@@ -700,7 +643,7 @@ function Login(_ref) {
     type: "text",
     value: email,
     onChange: function onChange(e) {
-      return emailHandler(e);
+      return setEmail(e.target.value);
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "password"
@@ -709,7 +652,7 @@ function Login(_ref) {
     type: "text",
     value: password,
     onChange: function onChange(e) {
-      return passwordHandler(e);
+      return setPassword(e.target.value);
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     onClick: function onClick(e) {
@@ -717,15 +660,11 @@ function Login(_ref) {
     },
     type: "submit",
     value: "Submit"
-  }), loginError ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "alert-text"
-  }, "Your password or Email was invalid.") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null));
+  }));
 }
 Login.propTypes = {
   setacctdisplay: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired,
-  setAccountData: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired,
-  submit: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool).isRequired,
-  setSubmit: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired
+  setAccountData: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired
 };
 
 /***/ }),
@@ -758,8 +697,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function SaveStory(_ref) {
   var setaccdisplay = _ref.setaccdisplay,
     story = _ref.story,
-    accountData = _ref.accountData,
-    setSubmit = _ref.setSubmit;
+    accountData = _ref.accountData;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     storyName = _useState2[0],
@@ -786,13 +724,7 @@ function SaveStory(_ref) {
       axios__WEBPACK_IMPORTED_MODULE_1__["default"].put('/save', {
         data: data
       }).then(function (res) {
-        setSubmit(function (prev) {
-          return !prev;
-        });
-        setStoryName('');
-        setSave(function (prev) {
-          return !prev;
-        });
+        return console.log(res);
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -815,9 +747,7 @@ function SaveStory(_ref) {
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     className: "saveStory",
-    onSubmit: function onSubmit(e) {
-      return handleSubmit(e);
-    }
+    onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "name"
   }, "Name:", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
@@ -840,8 +770,7 @@ function SaveStory(_ref) {
 SaveStory.propTypes = {
   setacctdisplay: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired,
   story: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string).isRequired,
-  accountData: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().object).isRequired,
-  setSubmit: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func).isRequired
+  accountData: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().object).isRequired
 };
 
 /***/ }),
@@ -984,8 +913,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function StoryButton(_ref) {
   var accountData = _ref.accountData,
     setacctdisplay = _ref.setacctdisplay,
-    setAccountData = _ref.setAccountData,
-    setStory = _ref.setStory;
+    setAccountData = _ref.setAccountData;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     name = _useState2[0],
@@ -1008,7 +936,6 @@ function StoryButton(_ref) {
   var clickHandler = function clickHandler(e) {
     e.preventDefault();
     console.log('Clicked in button');
-    setStory(accountData.body);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     className: "stry-nme-btn",

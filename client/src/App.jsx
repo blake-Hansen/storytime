@@ -31,7 +31,6 @@ export default function App() {
       })
         .then((res) => setStory(res.data))
         .then(() => setLoading(false))
-        .then(() => setSendReq((prev) => !prev))
         .catch((err) => console.log(err));
     }
   }, [sendReq]);
@@ -43,7 +42,7 @@ export default function App() {
         would like to save stories you like to an
         account for future use
       </h4>
-      <LoginContainer setStory={setStory} story={story} />
+      <LoginContainer story={story} />
       {loadingInProgress ? (
         <div className="loader-container">
           <ClipLoader className="spinloader" color="#720404" size={150} />
